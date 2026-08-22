@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Time;
+
 @Entity
-@Table(name = "ordersstagelogs")
+@Table(name = "orders_stage_logs")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,5 +17,21 @@ import lombok.Setter;
 public class OrdersStageLogs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "id")
+    private Integer id;
+
+    @Column(name = "start_time", nullable = true, length = 7)
+    private Time finishTime;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "stage",nullable = true, length = 20)
+    private OrdersEnum stage;
+
+    @ManyToOne
+    @JoinColumn(name = "orders_id")
+    private Orders ordersId;
+
+    @OneToOne
+    @JoinColumn(name = "users_id")
+    private Users userId;
 }

@@ -7,20 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "client")
+@Table(name = "stations")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Client {
+public class Stations {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
-    @Column(name = "name",length = 10, nullable = true)
-    private String name;
-
-    @Column(name = "company",length = 20, nullable = true)
-    private String company;
 }
