@@ -18,16 +18,16 @@ public class Users {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name",nullable = true, length = 20)
+    @Column(name = "name",nullable = false, length = 20)
     private String name;
 
-    @Column(name = "password",nullable = true, length = 10)
+    @Column(name = "password",nullable = false, length = 10)
     private char password;
 
-    @Column(name = "division",nullable = true, length = 20)
+    @Column(name = "division",nullable = false, length = 20)
     private String division;
 
     @ManyToOne
     @JoinColumn(name = "stations_id")
-    private Stations station_id;
+    private Stations stationId;
 }

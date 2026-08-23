@@ -17,4 +17,10 @@ public class Stations {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
+    @Column(name = "code", nullable = false, length = 20)
+    private char code;
+
+    @Column(name = "name", nullable = false, length = 20)
+    private String name;
 }

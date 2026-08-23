@@ -17,4 +17,15 @@ public class ProductionRoutePlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
+    @Column(name = "sequence_no", nullable = false)
+    private int sequenceNo;
+
+    @ManyToOne
+    @JoinColumn(name = "production_schedule_id")
+    private ProductionSchedule productionScheduleId;
+
+    @ManyToOne
+    @JoinColumn(name = "stations_id")
+    private Stations stationsId;
 }

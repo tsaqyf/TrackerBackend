@@ -18,11 +18,11 @@ public class Orders {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "po_number",nullable = true, length = 10)
+    @Column(name = "po_number",nullable = false, length = 10)
     private char poNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "current_stage",nullable = true, length = 20)
+    @Column(name = "current_stage",nullable = false, length = 20)
     private OrdersEnum currentStage;
 
     @ManyToOne

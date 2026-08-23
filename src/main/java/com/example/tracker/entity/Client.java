@@ -18,9 +18,9 @@ public class Client {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name",length = 10, nullable = true)
+    @Column(name = "name",length = 10, nullable = false)
     private String name;
 
-    @Column(name = "company",length = 20, nullable = true)
+    @Column(name = "company",length = 20, nullable = false)
     private String company;
 }

@@ -20,11 +20,11 @@ public class OrdersStageLogs {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "start_time", nullable = true, length = 7)
-    private Time finishTime;
+    @Column(name = "start_time", nullable = false, length = 7)
+    private Time startTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "stage",nullable = true, length = 20)
+    @Column(name = "stage",nullable = false, length = 20)
     private OrdersEnum stage;
 
     @ManyToOne
