@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Time;
+import java.util.UUID;
 
 @Entity
 @Table(name = "production_route_logs")
@@ -18,7 +19,7 @@ public class ProductionRouteLogs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private UUID id;
 
     @Column(name = "status",nullable = false)
     private String status;

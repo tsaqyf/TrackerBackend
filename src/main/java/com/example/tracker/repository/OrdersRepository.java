@@ -6,8 +6,9 @@ import com.example.tracker.entity.OrdersEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface OrdersRepository extends JpaRepository<Orders,Integer> {
+public interface OrdersRepository extends JpaRepository<Orders, UUID> {
     List<Orders> findByPoNumber(char poNumber);
 
     List<Orders> findByCurrentStage(OrdersEnum currentStage);

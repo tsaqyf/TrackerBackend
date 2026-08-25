@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -16,13 +18,16 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private UUID id;
+
+    @Column(name = "username", nullable = false, length = 20)
+    private String username;
 
     @Column(name = "name",nullable = false, length = 20)
     private String name;
 
-    @Column(name = "password",nullable = false, length = 10)
-    private char password;
+    @Column(name = "password",nullable = false, length = 100)
+    private String password;
 
     @Column(name = "division",nullable = false, length = 20)
     private String division;

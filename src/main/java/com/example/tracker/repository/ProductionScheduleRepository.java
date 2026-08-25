@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface ProductionScheduleRepository extends JpaRepository<ProductionSchedule, Integer> {
+public interface ProductionScheduleRepository extends JpaRepository<ProductionSchedule, UUID> {
 
     @Override
-    Optional<ProductionSchedule> findById(Integer integer);
+    Optional<ProductionSchedule> findById(UUID integer);
 
     List<ProductionSchedule> findByOrdersId(Orders ordersId);
 

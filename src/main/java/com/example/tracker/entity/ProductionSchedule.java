@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Time;
+import java.util.UUID;
 
 @Entity
 @Table(name = "production_schedule")
@@ -18,7 +19,7 @@ public class ProductionSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private UUID id;
 
     @Column(name = "planned_start", nullable = false)
     private Time plannedStart;

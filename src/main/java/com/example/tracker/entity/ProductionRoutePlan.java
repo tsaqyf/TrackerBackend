@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "production_route_plan")
 @Getter
@@ -16,10 +18,13 @@ public class ProductionRoutePlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private UUID id;
 
     @Column(name = "sequence_no", nullable = false)
     private int sequenceNo;
+
+    @Column(name = "current_status",nullable = false)
+    private String currentStatus;
 
     @ManyToOne
     @JoinColumn(name = "production_schedule_id")

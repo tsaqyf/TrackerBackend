@@ -5,11 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface ClientRepository extends JpaRepository<Client,Integer> {
+public interface ClientRepository extends JpaRepository<Client,UUID> {
 
     @Override
-    Optional<Client> findById(Integer integer);
+    Optional<Client> findById(UUID integer);
 
     List<Client> findByName(String name);
 
