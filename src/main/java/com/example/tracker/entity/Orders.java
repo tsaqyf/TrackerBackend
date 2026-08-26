@@ -3,7 +3,6 @@ package com.example.tracker.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
@@ -13,7 +12,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +28,8 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client clientId;
+
+    public Orders(){
+        this.currentStage = OrdersEnum.ORDERS;
+    }
 }

@@ -1,5 +1,5 @@
 package com.example.tracker.entity;
 
 public enum OrdersEnum {
-    ORDERS,PRODUCTION,TRIAL,FINISHED
+    ORDERS,SCHEDULE,PRODUCTION,TRIAL,FINISHED
 }

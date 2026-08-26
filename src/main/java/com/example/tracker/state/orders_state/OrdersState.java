@@ -1,4 +1,9 @@
 package com.example.tracker.state.orders_state;
 
-public class OrdersState {
+import com.example.tracker.entity.Orders;
+import com.example.tracker.entity.OrdersEnum;
+
+public interface OrdersState {
+    void next(Orders orders);
+    OrdersEnum getStatus();
 }
