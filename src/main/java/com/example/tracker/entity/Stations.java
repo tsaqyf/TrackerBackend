@@ -21,7 +21,7 @@ public class Stations {
     private UUID id;
 
     @Column(name = "code", nullable = false, length = 20)
-    private char code;
+    private String code;
 
     @Column(name = "name", nullable = false, length = 20)
     private String name;
