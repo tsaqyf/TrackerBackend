@@ -55,10 +55,11 @@ public class OrdersStateMachineConfig extends StateMachineConfigurerAdapter<Orde
                 return false;
             }
 
-            boolean isMatched = code.equals(ordersRepository.existsByStationsId_Code(code));
+            boolean isMatched;
+            if (code.equals(orders.getStationsId().getCode())) isMatched = true;
+            else isMatched = false;
 
             return isMatched;
-
         };
     }
 }
