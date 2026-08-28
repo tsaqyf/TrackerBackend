@@ -1,4 +1,4 @@
-package com.example.tracker.state.orders_state;
+package com.example.tracker.state;
 
 import com.example.tracker.entity.ConfirmationEvent;
 import com.example.tracker.entity.Orders;
@@ -38,7 +38,26 @@ public class OrdersStateMachineConfig extends StateMachineConfigurerAdapter<Orde
                 .source(OrdersEnum.ORDERS)
                 .target(OrdersEnum.SCHEDULE)
                 .event(ConfirmationEvent.VERIFY_STATIONS)
+                .guard(confimFunction())
+                .and().withExternal()
+                .source(OrdersEnum.SCHEDULE).target(OrdersEnum.PRODUCTION)
+                .event(ConfirmationEvent.VERIFY_STATIONS)
+                .guard(confimFunction())
+                .and().withExternal()
+                .source(OrdersEnum.PRODUCTION).target(OrdersEnum.TRIAL)
+                .event(ConfirmationEvent.VERIFY_PRODUCTION)
+                .guard(productionConfirmFunciton())
+                .and().withExternal()
+                .source(OrdersEnum.TRIAL).target(OrdersEnum.FINISHED)
+                .event(ConfirmationEvent.VERIFY_STATIONS)
                 .guard(confimFunction());
+    }
+
+    private Guard<OrdersEnum, ConfirmationEvent> productionConfirmFunciton() {
+        return stateContext -> {
+            //isi dengan configure apakah production sudah selesai atau belum
+            return false;
+        };
     }
 
     private Guard<OrdersEnum, ConfirmationEvent> confimFunction() {

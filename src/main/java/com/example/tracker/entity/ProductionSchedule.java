@@ -21,11 +21,11 @@ public class ProductionSchedule {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "planned_start", nullable = false)
-    private Time plannedStart;
+    @Column(name = "time_start", nullable = false)
+    private Time timeStart;
 
-    @Column(name = "planned_end", nullable = false)
-    private Time plannedEnd;
+    @Column(name = "time_finish", nullable = false)
+    private Time timeFinish;
 
     @ManyToOne
     @JoinColumn(name = "orders_id")
