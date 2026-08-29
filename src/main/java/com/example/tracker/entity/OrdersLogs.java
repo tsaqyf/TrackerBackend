@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
@@ -15,18 +16,20 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrdersStageLogs {
+public class OrdersLogs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "start_time", nullable = false, length = 7)
-    private Time startTime;
+    @Column(name = "po_numbers")
+    private String poNumbers;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "stage",nullable = false, length = 20)
-    private OrdersEnum stage;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+
+    @Column(name = "is_active", nullable = false)
+    private Timestamp isActive;
 
     @ManyToOne
     @JoinColumn(name = "orders_id")
@@ -35,4 +38,12 @@ public class OrdersStageLogs {
     @OneToOne
     @JoinColumn(name = "users_id")
     private Users userId;
+
+    @OneToOne
+    @JoinColumn(name = "stations_id")
+    private Stations stationsId;
+
+    @OneToOne
+    @JoinColumn(name = "orders_route_id")
+    private OrdersRoute ordersRouteId;
 }

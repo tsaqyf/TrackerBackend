@@ -10,33 +10,37 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(name = "orders_route")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Users {
+public class OrdersRoute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "username", nullable = false, length = 20)
-    private String username;
+    @Column(name = "sequence")
+    private int sequence;
 
-    @Column(name = "name",nullable = false, length = 20)
-    private String name;
+    @Column(name = "route_label")
+    private OrdersRouteEnum routeLabel;
 
-    @Column(name = "password",nullable = false, length = 100)
-    private String password;
+    @Column(name = "step_label")
+    private OrdersStepEnum step_label;
 
-    @Column(name = "division",nullable = false, length = 20)
-    private String division;
+    @Column(name = "start_time")
+    private Timestamp startTime;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private Timestamp isActive;
 
     @ManyToOne
+    @JoinColumn(name = "orders_id")
+    private Orders ordersId;
+
+    @OneToOne
     @JoinColumn(name = "stations_id")
-    private Stations stationId;
+    private Stations stationsId;
 }

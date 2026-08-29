@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
@@ -24,15 +25,14 @@ public class Orders {
     private String poNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "current_stage",nullable = false, length = 20)
-    private OrdersEnum currentStage;
+    @Column(name = "current_phase",nullable = false, length = 20)
+    private OrdersPhaseEnum currentPhase;
+
+    @Column(name = "is_active", nullable = false)
+    private Timestamp isActive;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client clientId;
-
-    @OneToOne
-    @JoinColumn(name = "stations_id")
-    private Stations stationsId;
 
 }

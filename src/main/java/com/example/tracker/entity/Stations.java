@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
@@ -25,4 +26,7 @@ public class Stations {
 
     @Column(name = "name", nullable = false, length = 20)
     private String name;
+
+    @Column(name = "is_active", nullable = false)
+    private Timestamp isActive;
 }
