@@ -28,7 +28,7 @@ public class OrdersRoute {
     private OrdersRouteEnum routeLabel;
 
     @Column(name = "step_label")
-    private OrdersStepEnum step_label;
+    private OrdersStepEnum stepLabel;
 
     @Column(name = "start_time")
     private Timestamp startTime;
@@ -43,4 +43,10 @@ public class OrdersRoute {
     @OneToOne
     @JoinColumn(name = "stations_id")
     private Stations stationsId;
+
+    public OrdersRoute(int sequence, OrdersRouteEnum routeLabel, OrdersStepEnum stepLabel){
+        this.sequence = sequence;
+        this.routeLabel = routeLabel;
+        this.stepLabel = stepLabel;
+    }
 }
