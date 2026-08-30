@@ -28,7 +28,7 @@ public class OrdersRoute {
     private OrdersRouteEnum routeLabel;
 
     @Column(name = "step_label")
-    private OrdersStepEnum stepLabel;
+    private OrdersStepEnum stepLabel = OrdersStepEnum.PENDING;
 
     @Column(name = "start_time")
     private Timestamp startTime;

@@ -28,13 +28,16 @@ public class Orders {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "current_phase",nullable = false, length = 20)
-    private OrdersPhaseEnum currentPhase;
+    private OrdersPhaseEnum currentPhase = OrdersPhaseEnum.IN_ROUTE;
 
     @Column(name = "client_name",length = 10, nullable = false)
     private String clientName;
 
     @Column(name = "client_company",length = 20, nullable = false)
     private String clientCompany;
+
+    @Column(name = "created_at")
+    private Timestamp createdAt;
 
     @Column(name = "is_active", nullable = false)
     private Timestamp isActive;
