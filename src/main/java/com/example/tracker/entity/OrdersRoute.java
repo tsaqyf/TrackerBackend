@@ -33,6 +33,9 @@ public class OrdersRoute {
     @Column(name = "start_time")
     private Timestamp startTime;
 
+    @Column(name = "stations_code")
+    private String stationsCode;
+
     @Column(name = "is_active")
     private Timestamp isActive;
 
@@ -44,9 +47,9 @@ public class OrdersRoute {
     @JoinColumn(name = "stations_id")
     private Stations stationsId;
 
-    public OrdersRoute(int sequence, OrdersRouteEnum routeLabel, OrdersStepEnum stepLabel){
+    public OrdersRoute(int sequence, OrdersRouteEnum routeLabel, String stationsCode){
         this.sequence = sequence;
         this.routeLabel = routeLabel;
-        this.stepLabel = stepLabel;
+        this.stationsCode = stationsCode;
     }
 }

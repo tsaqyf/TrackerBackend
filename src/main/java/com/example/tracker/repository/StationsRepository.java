@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface StationsRepository extends JpaRepository<Stations, UUID> {
-    List<Stations> findByCodeOrName(@Nullable char code, @Nullable String name);
+    List<Stations> findByCodeOrName(char code, String name);
 
 }
