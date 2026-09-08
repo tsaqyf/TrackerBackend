@@ -46,4 +46,8 @@ public class Orders {
     @OrderBy("sequence ASC")
     private List<OrdersRoute> routesStep = new ArrayList<>();
 
+    public void addRouteStep(OrdersRoute step){
+        step.setOrdersId(this);
+        routesStep.add(step);
+    }
 }

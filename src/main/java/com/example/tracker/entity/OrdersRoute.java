@@ -52,4 +52,11 @@ public class OrdersRoute {
         this.routeLabel = routeLabel;
         this.stationsCode = stationsCode;
     }
+
+    public void ChangeStep(OrdersStepEnum step){
+        if (step == null){
+            return;
+        }
+        stepLabel = step;
+    }
 }
