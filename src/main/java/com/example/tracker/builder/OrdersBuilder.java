@@ -7,28 +7,28 @@ import com.example.tracker.entity.OrdersRoute;
 
 import java.util.List;
 
-public class OrdersBuilder implements OrdersBuilderInterface{
+public class OrdersBuilder{
     private final Orders orders = new Orders();
 
 
-    public OrdersBuilderInterface buildPoNumber(CreateOrdersRequest request){
+    public OrdersBuilder buildPoNumber(CreateOrdersRequest request){
         orders.setPoNumber(request.getPoNumber());
         return this;
     }
-    public OrdersBuilderInterface buildClientName(CreateOrdersRequest request){
+    public OrdersBuilder buildClientName(CreateOrdersRequest request){
         orders.setPoNumber(request.getClientName());
         return this;
     }
-    public OrdersBuilderInterface buildClientCompany(CreateOrdersRequest request){
+    public OrdersBuilder buildClientCompany(CreateOrdersRequest request){
         orders.setPoNumber(request.getClientCompany());
         return this;
     }
 
-    public OrdersBuilderInterface buildPhase(){
+    public OrdersBuilder buildPhase(){
         orders.setCurrentPhase(OrdersPhaseEnum.IN_ROUTE);
         return this;
     }
-    public OrdersBuilderInterface buildRoute(CreateOrdersRequest request, List<OrdersRoute> routes){
+    public OrdersBuilder buildRoute(CreateOrdersRequest request, List<OrdersRoute> routes){
         routes.forEach(orders::addRouteStep);
         return this;
     }

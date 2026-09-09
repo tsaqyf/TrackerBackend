@@ -47,10 +47,10 @@ public class OrdersRoute {
     @JoinColumn(name = "stations_id")
     private Stations stationsId;
 
-    public OrdersRoute(int sequence, OrdersRouteEnum routeLabel, String stationsCode){
+    public OrdersRoute(int sequence, OrdersRouteEnum routeLabel, Stations stationsId){
         this.sequence = sequence;
         this.routeLabel = routeLabel;
-        this.stationsCode = stationsCode;
+        this.stationsId = stationsId;
     }
 
     public void ChangeStep(OrdersStepEnum step){

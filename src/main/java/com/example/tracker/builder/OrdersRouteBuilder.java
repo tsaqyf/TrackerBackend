@@ -3,6 +3,8 @@ package com.example.tracker.builder;
 import com.example.tracker.dto.ProductionStep;
 import com.example.tracker.entity.OrdersRoute;
 import com.example.tracker.entity.OrdersRouteEnum;
+import com.example.tracker.entity.Stations;
+import com.example.tracker.repository.StationsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +15,17 @@ public class OrdersRouteBuilder {
     private final List<OrdersRoute> routes = new ArrayList<>();
     private int sequence = 1;
 
-    public OrdersRouteBuilder addProduction(List<ProductionStep> list){
-        for (ProductionStep step : list){
-            routes.add(new OrdersRoute(sequence++, OrdersRouteEnum.PRODUCTION,step.getStationsCode()));
+    private StationsRepository stationsRepository;
+
+    public OrdersRouteBuilder addProduction(List<Stations> list){
+        for (Stations step : list){
+            routes.add(new OrdersRoute(sequence++, OrdersRouteEnum.PRODUCTION,step));
         }
         return this;
     }
 
-    public OrdersRouteBuilder addTrial(){
-        routes.add(new OrdersRoute(sequence++, OrdersRouteEnum.TRIAL,Station_Testing));
+    public OrdersRouteBuilder addTrial(Stations QcStations){
+        routes.add(new OrdersRoute(sequence++, OrdersRouteEnum.TRIAL,QcStations));
         return this;
     }
 
@@ -32,13 +36,5 @@ public class OrdersRouteBuilder {
 
     public List<OrdersRoute> build(){
         return routes;
-    }
-
-    public static List<OrdersRoute> buildFullRoute(List<ProductionStep> productionSteps){
-        return new OrdersRouteBuilder()
-                .addProduction(productionSteps)
-                .addTrial()
-                .addFinished()
-                .build();
     }
 }
