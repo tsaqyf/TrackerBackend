@@ -7,6 +7,7 @@ import com.example.tracker.dto.ProductionStep;
 import com.example.tracker.entity.Orders;
 import com.example.tracker.entity.OrdersRoute;
 import com.example.tracker.entity.Stations;
+import com.example.tracker.exception.NotFoundException;
 import com.example.tracker.repository.OrdersRepository;
 import com.example.tracker.repository.OrdersRouteRepository;
 import com.example.tracker.repository.StationsRepository;
@@ -37,12 +38,18 @@ public class OrdersService {
         Map<String, Stations> StationsCode = stationsRepository.findAllByCodeIn(requestStationsCode)
                 .stream()
                 .collect(Collectors.toMap(Stations::getCode, s -> s));
-        //add validate
+        for (String code: requestStationsCode){
+            if (!StationsCode.containsKey(code)){
+                throw new NotFoundException("No Station Found with this code: " + code);
+            }
+        }
         List<Stations> orderedStations = request.getProductionSteps()
                 .stream()
                 .map(input -> StationsCode.get(input.getStationsCode()))
                 .toList();
-        Stations qcStations = stationsRepository.findByCode(Stations_QC).orElseThrow();
+        Stations qcStations = stationsRepository
+                .findByCode(Stations_QC)
+                .orElseThrow(() -> new NotFoundException("QC Station Not Found"));
         List<OrdersRoute> routes = new OrdersRouteBuilder()
                 .addProduction(orderedStations)
                 .addTrial(qcStations)
