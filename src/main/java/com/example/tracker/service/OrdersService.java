@@ -4,9 +4,9 @@ import com.example.tracker.builder.OrdersBuilder;
 import com.example.tracker.builder.OrdersRouteBuilder;
 import com.example.tracker.dto.CreateOrdersRequest;
 import com.example.tracker.dto.ProductionStep;
-import com.example.tracker.entity.Orders;
-import com.example.tracker.entity.OrdersRoute;
-import com.example.tracker.entity.Stations;
+import com.example.tracker.entity.*;
+import com.example.tracker.exception.ForbiddenException;
+import com.example.tracker.exception.InvalidException;
 import com.example.tracker.exception.NotFoundException;
 import com.example.tracker.repository.OrdersRepository;
 import com.example.tracker.repository.OrdersRouteRepository;
@@ -69,5 +69,28 @@ public class OrdersService {
     public OrdersRoute StartRoute(UUID OrdersId, UUID OrdersRouteId, String StationsCode){
 
         return null;
+    }
+
+    @Transactional
+    public void cancelRoute(UUID OrdersId, String UserStationsCode){
+        Stations adminStations = stationsRepository
+                .findByCode(Stations_Admin)
+                .orElseThrow(() -> new NotFoundException("Admin Not Found"));
+
+        if (!adminStations.getCode().equals(UserStationsCode)){
+            throw new ForbiddenException("Don't have access to this function");
+        }
+
+        Orders orders = ordersRepository.findById(OrdersId)
+                .orElseThrow(() -> new NotFoundException("Orders Not Found"));
+
+        if (orders.getCurrentPhase() != OrdersPhaseEnum.IN_ROUTE){
+            throw new InvalidException("Phase Either in Finished or Already Canceled");
+        }
+
+        orders.changePhase(OrdersPhaseEnum.CANCELLED);
+        ordersRepository.save(orders);
+        ordersRouteRepository.findByOrdersIdAndStepLabelNot(orders, OrdersStepEnum.DONE)
+                .forEach(step -> step.ChangeStep(OrdersStepEnum.CANCELLED));
     }
 }
