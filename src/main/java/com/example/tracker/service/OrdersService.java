@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,13 +60,13 @@ public class OrdersService {
                 .buildClientName(request)
                 .buildClientCompany(request)
                 .buildPhase()
-                .buildRoute(request, routes)
+                .buildRoute(routes)
                 .buildFullOrders();
         return ordersRepository.save(orders);
     }
 
     @Transactional
-    public OrdersRoute StartRoute(){
+    public OrdersRoute StartRoute(UUID OrdersId, UUID OrdersRouteId, String StationsCode){
 
         return null;
     }

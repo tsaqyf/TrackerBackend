@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Stations {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
 

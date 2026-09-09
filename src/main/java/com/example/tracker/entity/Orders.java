@@ -19,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
 
@@ -47,7 +47,15 @@ public class Orders {
     private List<OrdersRoute> routesStep = new ArrayList<>();
 
     public void addRouteStep(OrdersRoute step){
-        step.setOrdersId(this);
-        routesStep.add(step);
+        if (step != null){
+            step.setOrdersId(this);
+            routesStep.add(step);
+        }
+    }
+
+    public void changePhase(OrdersPhaseEnum phaseEnum){
+        if (phaseEnum != null){
+            setCurrentPhase(phaseEnum);
+        }
     }
 }

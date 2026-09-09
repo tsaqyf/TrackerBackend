@@ -28,7 +28,7 @@ public class OrdersBuilder{
         orders.setCurrentPhase(OrdersPhaseEnum.IN_ROUTE);
         return this;
     }
-    public OrdersBuilder buildRoute(CreateOrdersRequest request, List<OrdersRoute> routes){
+    public OrdersBuilder buildRoute(List<OrdersRoute> routes){
         routes.forEach(orders::addRouteStep);
         return this;
     }
