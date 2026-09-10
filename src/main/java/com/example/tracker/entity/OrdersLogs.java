@@ -28,7 +28,7 @@ public class OrdersLogs {
     @Column(name = "created_at")
     private Timestamp createdAt;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private Timestamp isActive;
 
     @ManyToOne
@@ -46,4 +46,13 @@ public class OrdersLogs {
     @OneToOne
     @JoinColumn(name = "orders_route_id")
     private OrdersRoute ordersRouteId;
+
+     public OrdersLogs (String poNumbers, Timestamp createdAt, Orders ordersId, Users userId, Stations stationsId, OrdersRoute ordersRouteId){
+         this.poNumbers = poNumbers;
+         this.createdAt = createdAt;
+         this.ordersId = ordersId;
+         this.userId = userId;
+         this.stationsId = stationsId;
+         this.ordersRouteId = ordersRouteId;
+     }
 }

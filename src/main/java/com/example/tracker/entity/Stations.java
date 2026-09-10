@@ -27,6 +27,6 @@ public class Stations {
     @Column(name = "name", nullable = false, length = 20)
     private String name;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private Timestamp isActive;
 }

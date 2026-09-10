@@ -13,7 +13,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface OrdersRouteRepository extends JpaRepository<OrdersRoute, UUID> {
-    Optional<OrdersRoute> findByOrdersIdAndId(Orders ordersId, UUID id);
+
+    Optional<OrdersRoute> findByOrdersId_IdAndId(UUID ordersId, UUID id);
 
     Optional<OrdersRoute> findFirstByOrdersIdAndStepLabelNotOrderBySequenceAsc(Orders ordersId, OrdersStepEnum stepLabel);
 

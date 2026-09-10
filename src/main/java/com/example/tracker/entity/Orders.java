@@ -39,7 +39,7 @@ public class Orders {
     @Column(name = "created_at")
     private Timestamp createdAt;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private Timestamp isActive;
 
     @OneToMany(mappedBy = "ordersId", cascade = CascadeType.ALL, orphanRemoval = true)

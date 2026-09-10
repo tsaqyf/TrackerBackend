@@ -66,8 +66,15 @@ public class OrdersService {
     }
 
     @Transactional
-    public OrdersRoute StartRoute(UUID OrdersId, UUID OrdersRouteId, String StationsCode){
+    public OrdersRoute StartRoute(UUID OrdersId, UUID OrdersRouteId, String StationsCode, UUID usersId){
 
+        return null;
+    }
+
+    @Transactional
+    public OrdersRoute FinishRoute(UUID OrdersId, UUID OrdersRouteId, String StationsCode, UUID usersId){
+
+        OrdersRoute step = ordersRouteRepository.findByOrdersId_IdAndId(OrdersId,OrdersRouteId).orElseThrow();
         return null;
     }
 

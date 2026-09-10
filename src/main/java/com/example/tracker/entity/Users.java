@@ -33,7 +33,7 @@ public class Users {
     @Column(name = "division",nullable = false, length = 20)
     private String division;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private Timestamp isActive;
 
     @ManyToOne
