@@ -71,8 +71,20 @@ public class OrdersService {
 
     @Transactional
     public OrdersRoute StartRoute(UUID OrdersId, UUID OrdersRouteId, String StationsCode, UUID usersId){
+        Orders orders = ordersRepository
+                .findById(OrdersId)
+                .orElseThrow(() -> new NotFoundException("Orders Not Found"));
 
-        return null;
+        OrdersRoute step = ordersRouteRepository
+                .findByOrdersId_IdAndId(OrdersId,OrdersRouteId)
+                .orElseThrow(() -> new NotFoundException("Orders Route Not Found"));
+
+        if (orders.getCurrentPhase() != OrdersPhaseEnum.IN_ROUTE){
+            throw new InvalidException("Not In Route Orders");
+        }
+
+        requiredStations(StationsCode, step.getStationsId());
+        return step;
     }
 
 
