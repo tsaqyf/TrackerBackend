@@ -60,4 +60,8 @@ public class OrdersRoute {
         }
         stepLabel = step;
     }
+
+    public void FinishStep(){
+        stepLabel = OrdersStepEnum.DONE;
+    }
 }

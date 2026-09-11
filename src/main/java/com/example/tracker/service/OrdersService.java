@@ -93,6 +93,7 @@ public class OrdersService {
         }
 
         requiredStations(StationsCode, step.getStationsId());
+        step.FinishStep();
         OrdersLogs ordersLogs = new OrdersLogs(orders.getPoNumber(), orders, users, step.getStationsId(), step);
         ordersLogsRepository.save(ordersLogs);
         ordersRouteRepository.save(step);
