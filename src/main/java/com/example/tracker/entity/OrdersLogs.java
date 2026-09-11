@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -25,7 +26,8 @@ public class OrdersLogs {
     @Column(name = "po_numbers")
     private String poNumbers;
 
-    @Column(name = "created_at")
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false, nullable = false)
     private Timestamp createdAt;
 
     @Column(name = "is_active")
@@ -47,12 +49,11 @@ public class OrdersLogs {
     @JoinColumn(name = "orders_route_id")
     private OrdersRoute ordersRouteId;
 
-     public OrdersLogs (String poNumbers, Timestamp createdAt, Orders ordersId, Users userId, Stations stationsId, OrdersRoute ordersRouteId){
-         this.poNumbers = poNumbers;
-         this.createdAt = createdAt;
-         this.ordersId = ordersId;
-         this.userId = userId;
-         this.stationsId = stationsId;
-         this.ordersRouteId = ordersRouteId;
-     }
+    public OrdersLogs(String poNumbers, Orders ordersId, Users userId, Stations stationsId, OrdersRoute ordersRouteId) {
+        this.poNumbers = poNumbers;
+        this.ordersId = ordersId;
+        this.userId = userId;
+        this.stationsId = stationsId;
+        this.ordersRouteId = ordersRouteId;
+    }
 }

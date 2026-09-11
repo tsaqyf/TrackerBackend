@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -31,7 +32,7 @@ public class OrdersRoute {
     private OrdersStepEnum stepLabel = OrdersStepEnum.PENDING;
 
     @Column(name = "start_time")
-    private Timestamp startTime;
+    private LocalDateTime startTime;
 
     @Column(name = "stations_code")
     private String stationsCode;

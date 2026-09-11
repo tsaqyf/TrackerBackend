@@ -2,19 +2,21 @@ package com.example.tracker.service;
 
 import com.example.tracker.builder.OrdersBuilder;
 import com.example.tracker.builder.OrdersRouteBuilder;
+import com.example.tracker.dto.ActiveStepViewResponse;
 import com.example.tracker.dto.CreateOrdersRequest;
 import com.example.tracker.dto.ProductionStep;
 import com.example.tracker.entity.*;
 import com.example.tracker.exception.ForbiddenException;
 import com.example.tracker.exception.InvalidException;
 import com.example.tracker.exception.NotFoundException;
-import com.example.tracker.repository.OrdersRepository;
-import com.example.tracker.repository.OrdersRouteRepository;
-import com.example.tracker.repository.StationsRepository;
+import com.example.tracker.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -28,6 +30,8 @@ public class OrdersService {
 
     private final OrdersRepository ordersRepository;
     private final OrdersRouteRepository ordersRouteRepository;
+    private final OrdersLogsRepository ordersLogsRepository;
+    private final UsersRepository usersRepository;
     private final StationsRepository stationsRepository;
 
     @Transactional
@@ -71,11 +75,32 @@ public class OrdersService {
         return null;
     }
 
+
     @Transactional
     public OrdersRoute FinishRoute(UUID OrdersId, UUID OrdersRouteId, String StationsCode, UUID usersId){
+        Orders orders = ordersRepository
+                .findById(OrdersId)
+                .orElseThrow(() -> new NotFoundException("Orders Not Found"));
 
-        OrdersRoute step = ordersRouteRepository.findByOrdersId_IdAndId(OrdersId,OrdersRouteId).orElseThrow();
-        return null;
+        OrdersRoute step = ordersRouteRepository
+                .findByOrdersId_IdAndId(OrdersId,OrdersRouteId)
+                .orElseThrow(() -> new NotFoundException("Orders Route Not Found"));
+
+        Users users = usersRepository.findById(usersId).orElseThrow(() -> new NotFoundException("Users Not Found"));
+
+        if (orders.getCurrentPhase() != OrdersPhaseEnum.IN_ROUTE){
+            throw new InvalidException("Not In Route Orders");
+        }
+
+        requiredStations(StationsCode, step.getStationsId());
+        OrdersLogs ordersLogs = new OrdersLogs(orders.getPoNumber(), orders, users, step.getStationsId(), step);
+        ordersLogsRepository.save(ordersLogs);
+        ordersRouteRepository.save(step);
+        if (step.getRouteLabel() == OrdersRouteEnum.FINISHED){
+            orders.changePhase(OrdersPhaseEnum.FINISHED);
+            ordersRepository.save(orders);
+        }
+        return step;
     }
 
     @Transactional
@@ -84,9 +109,7 @@ public class OrdersService {
                 .findByCode(Stations_Admin)
                 .orElseThrow(() -> new NotFoundException("Admin Not Found"));
 
-        if (!adminStations.getCode().equals(UserStationsCode)){
-            throw new ForbiddenException("Don't have access to this function");
-        }
+        requiredStations(UserStationsCode, adminStations);
 
         Orders orders = ordersRepository.findById(OrdersId)
                 .orElseThrow(() -> new NotFoundException("Orders Not Found"));
@@ -99,5 +122,18 @@ public class OrdersService {
         ordersRepository.save(orders);
         ordersRouteRepository.findByOrdersIdAndStepLabelNot(orders, OrdersStepEnum.DONE)
                 .forEach(step -> step.ChangeStep(OrdersStepEnum.CANCELLED));
+    }
+
+    public void requiredStations(String userStation, Stations stationsNeeded){
+        if (stationsNeeded == null){
+            return;
+        }
+        if (!stationsNeeded.getCode().equals(userStation)){
+            throw new ForbiddenException("Access Denied");
+        }
+    }
+
+    public List<ActiveStepViewResponse> getActiveSteps(String stationsCode){
+        return ordersRouteRepository.findActiveStepsByStation(stationsCode);
     }
 }

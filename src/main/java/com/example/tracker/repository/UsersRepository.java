@@ -14,4 +14,6 @@ public interface UsersRepository extends JpaRepository<Users, UUID> {
     List<Users> findByName(String name);
     List<Users> findByStationId(Stations stationId);
 
+    @Override
+    Optional<Users> findById(UUID uuid);
 }
