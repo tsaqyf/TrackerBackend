@@ -69,24 +69,6 @@ public class OrdersService {
         return ordersRepository.save(orders);
     }
 
-    @Transactional
-    public OrdersRoute StartRoute(UUID OrdersId, UUID OrdersRouteId, String StationsCode, UUID usersId){
-        Orders orders = ordersRepository
-                .findById(OrdersId)
-                .orElseThrow(() -> new NotFoundException("Orders Not Found"));
-
-        OrdersRoute step = ordersRouteRepository
-                .findByOrdersId_IdAndId(OrdersId,OrdersRouteId)
-                .orElseThrow(() -> new NotFoundException("Orders Route Not Found"));
-
-        if (orders.getCurrentPhase() != OrdersPhaseEnum.IN_ROUTE){
-            throw new InvalidException("Not In Route Orders");
-        }
-
-        requiredStations(StationsCode, step.getStationsId());
-        return step;
-    }
-
 
     @Transactional
     public OrdersRoute FinishRoute(UUID OrdersId, UUID OrdersRouteId, String StationsCode, UUID usersId){
@@ -105,6 +87,10 @@ public class OrdersService {
         }
 
         requiredStations(StationsCode, step.getStationsId());
+
+        OrdersRoute activeStep = ordersRouteRepository.findFirstByOrdersId_IdAndStepLabelNotOrderBySequenceAsc(OrdersId, OrdersStepEnum.DONE)
+                .orElseThrow(() -> new InvalidException("All Route is Done"));
+
         step.FinishStep();
         OrdersLogs ordersLogs = new OrdersLogs(orders.getPoNumber(), orders, users, step.getStationsId(), step);
         ordersLogsRepository.save(ordersLogs);
