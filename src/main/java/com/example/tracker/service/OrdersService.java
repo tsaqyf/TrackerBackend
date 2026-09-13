@@ -69,7 +69,6 @@ public class OrdersService {
         return ordersRepository.save(orders);
     }
 
-
     @Transactional
     public OrdersRoute FinishRoute(UUID OrdersId, UUID OrdersRouteId, String StationsCode, UUID usersId){
         Orders orders = ordersRepository

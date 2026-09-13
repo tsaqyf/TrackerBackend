@@ -3,6 +3,7 @@ package com.example.tracker.builder;
 import com.example.tracker.dto.ProductionStep;
 import com.example.tracker.entity.OrdersRoute;
 import com.example.tracker.entity.OrdersRouteEnum;
+import com.example.tracker.entity.OrdersStepEnum;
 import com.example.tracker.entity.Stations;
 import com.example.tracker.repository.StationsRepository;
 
@@ -35,6 +36,9 @@ public class OrdersRouteBuilder {
     }
 
     public List<OrdersRoute> build(){
+        if (!routes.isEmpty()){
+            routes.getFirst().ChangeStep(OrdersStepEnum.IN_PROGRESS);
+        }
         return routes;
     }
 }
