@@ -37,7 +37,7 @@ public class OrdersController {
     }
 
     @PatchMapping("/{ordersId}/cancel")
-    public ResponseEntity<void> cancel(
+    public ResponseEntity<Void> cancel(
             @PathVariable UUID ordersId,
             @RequestHeader("X-Station-Code") String stationsCode
     ){
